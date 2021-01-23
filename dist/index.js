@@ -1,9 +1,11 @@
 "use strict";
+/* Settings */
 const pregnancyLength = 2; // 2 months
 const minAgeForPregnancy = 4; // Age at which a female cat can first get pregnant; 4 months
 const pregnancyDelay = 4; // A female cat can have 3 litters a year, meaning a cat can get pregnant every 4 months
 const maxAgeForPregnancy = 120; // 120 months = 10 years;
 const numberOfIterations = 24; // We are trying to find out how many descendants will a cat have after 18 months
+/* Cat class */
 class Cat {
     constructor(numOfKittensInALitter) {
         this.age = 1;
@@ -59,6 +61,7 @@ class Cat {
             return newKittens;
     }
 }
+/* Simulation function */
 // The average number of kittens in a litter is 4 to 6
 const simulatePopulationGrowth = (numOfKittensInALitter = [4, 6]) => {
     // This array will hold the number of cats at each generation
@@ -89,6 +92,7 @@ const simulatePopulationGrowth = (numOfKittensInALitter = [4, 6]) => {
     }
     return chartData;
 };
+/* Graph settings */
 // Create trace for maximum population size
 const maxPopSizeTrace = {
     x: Array.from({ length: numberOfIterations + 1 }).map((_, i) => i),
