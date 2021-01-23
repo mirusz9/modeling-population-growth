@@ -95,6 +95,9 @@ const maxPopSizeTrace = {
     y: simulatePopulationGrowth([6, 6]),
     mode: 'lines+markers',
     name: '6 kittens',
+    line: {
+        color: 'red',
+    },
 };
 // Create trace for average population size
 const avgPopSizeTrace = {
@@ -102,6 +105,9 @@ const avgPopSizeTrace = {
     y: simulatePopulationGrowth([5, 5]),
     mode: 'lines+markers',
     name: '5 kittens',
+    line: {
+        color: 'orange',
+    },
 };
 // Create trace for minimum population size
 const minPopSizeTrace = {
@@ -109,16 +115,19 @@ const minPopSizeTrace = {
     y: simulatePopulationGrowth([4, 4]),
     mode: 'lines+markers',
     name: '4 kittens',
+    line: {
+        color: 'blue',
+    },
 };
 const data = [maxPopSizeTrace, avgPopSizeTrace, minPopSizeTrace];
 const layout = {
     title: `Descendants of a cat (${numberOfIterations} months)`,
     xaxis: {
-        title: 'Months',
+        title: 'Time (Months)',
     },
     yaxis: {
-        title: 'Descendants',
+        title: 'Number of descendants',
     },
 };
 // Plot the graphs
-Plotly.newPlot('plot', data, layout);
+Plotly.newPlot('plot', data, layout, { displayModeBar: false });
