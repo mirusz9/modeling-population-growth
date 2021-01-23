@@ -1,0 +1,27 @@
+{
+	"name": "modeling-population-growth",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/mirusz9/modeling-population-growth.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/mirusz9/modeling-population-growth/issues"
+	},
+	"homepage": "https://github.com/mirusz9/modeling-population-growth#readme",
+	"dependencies": {
+		"@types/express": "^4.17.11",
+		"@types/node": "^14.14.22",
+		"@types/plotly.js": "^1.54.7",
+		"express": "^4.17.1",
+		"plotly.js": "^1.58.4"
+	}
+}

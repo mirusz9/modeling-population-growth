@@ -1,27 +1,27 @@
 "use strict";
 const pregnancyLength = 2; // 2 months
 const minAgeForPregnancy = 4; // Age at which a female cat can first get pregnant; 4 months
-const numOfKittensInALitter = [4, 6]; // Number of kittens in a litter; Usually 4 to 6
 const pregnancyDelay = 4; // A female cat can have 3 litters a year, meaning a cat can get pregnant every 4 months
 const maxAgeForPregnancy = 120; // 120 months = 10 years;
 const numberOfIterations = 24; // We are trying to find out how many descendants will a cat have after 18 months
 class Cat {
-    constructor() {
+    constructor(numOfKittensInALitter) {
         this.age = 1;
         this.isPregnant = false;
         this.pregnancyLength = 0;
         // Since the cat hasn't been pregnant yet, we'll just use infinity
         this.timeSinceLastPregnancy = Number.POSITIVE_INFINITY;
+        this.numOfKittensInALitter = numOfKittensInALitter;
     }
     haveKittens() {
         // Get the min and max number of kittens a cat can have
-        const minNumOfKittens = numOfKittensInALitter[0];
-        const maxNumOfKittens = numOfKittensInALitter[1];
+        const minNumOfKittens = this.numOfKittensInALitter[0];
+        const maxNumOfKittens = this.numOfKittensInALitter[1];
         // Get a random number between them
         const numberOfKittens = Math.floor(Math.random() * (maxNumOfKittens - minNumOfKittens)) +
             minNumOfKittens;
         // Create an array with length of kittens and fill it with new kittens
-        const kittens = Array.from({ length: numberOfKittens }).map(() => new Cat());
+        const kittens = Array.from({ length: numberOfKittens }).map(() => new Cat(this.numOfKittensInALitter));
         // Reset this
         this.isPregnant = false;
         return kittens;
@@ -59,26 +59,62 @@ class Cat {
             return newKittens;
     }
 }
-// Start with one cat
-const cats = [new Cat()];
-// Loop until the end of simulation
-for (let month = 0; month < numberOfIterations; month++) {
-    const newKittens = [];
-    // Update all cats
-    for (const cat of cats) {
-        const kittens = cat.update();
-        // If there are any new cats
-        if (kittens) {
-            // Loop through the new cats
-            for (const kitten of kittens) {
-                // Add them to the newborn cats array
-                newKittens.push(kitten);
+// The average number of kittens in a litter is 4 to 6
+const simulatePopulationGrowth = (numOfKittensInALitter = [4, 6]) => {
+    // This array will hold the number of cats at each generation
+    const chartData = [1];
+    // Start with one cat
+    const cats = [new Cat(numOfKittensInALitter)];
+    // Loop until the end of simulation
+    for (let month = 0; month < numberOfIterations; month++) {
+        const newKittens = [];
+        // Update all cats
+        for (const cat of cats) {
+            const kittens = cat.update();
+            // If there are any new cats
+            if (kittens) {
+                // Loop through the new cats
+                for (const kitten of kittens) {
+                    // Add them to the newborn cats array
+                    newKittens.push(kitten);
+                }
             }
         }
+        // After updating all cats, let's ad the new cats array
+        for (const kitten of newKittens) {
+            cats.push(kitten);
+        }
+        // Save the current population size (dont count the starting cat)
+        chartData.push(cats.length - 1);
     }
-    // After updating all cats, let's ad the new cats array
-    for (const kitten of newKittens) {
-        cats.push(kitten);
-    }
-}
-console.log('Number of descendants:', cats.length - 1);
+    return chartData;
+};
+const maxPopSizeTrace = {
+    x: Array.from({ length: numberOfIterations + 1 }).map((_, i) => i),
+    y: simulatePopulationGrowth([6, 6]),
+    mode: 'lines+markers',
+    name: 'Maximum Population Size',
+};
+const avgPopSizeTrace = {
+    x: Array.from({ length: numberOfIterations + 1 }).map((_, i) => i),
+    y: simulatePopulationGrowth([5, 5]),
+    mode: 'lines+markers',
+    name: 'Average Population Size',
+};
+const minPopSizeTrace = {
+    x: Array.from({ length: numberOfIterations + 1 }).map((_, i) => i),
+    y: simulatePopulationGrowth([4, 4]),
+    mode: 'lines+markers',
+    name: 'Minimum Population Size',
+};
+const data = [maxPopSizeTrace, avgPopSizeTrace, minPopSizeTrace];
+const layout = {
+    title: `Descendants of a cat (${numberOfIterations} months)`,
+    xaxis: {
+        title: 'Months',
+    },
+    yaxis: {
+        title: 'Descendants',
+    },
+};
+Plotly.newPlot('plot', data, layout);
