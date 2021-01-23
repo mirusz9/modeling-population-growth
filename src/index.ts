@@ -84,7 +84,7 @@ class Cat {
 // The average number of kittens in a litter is 4 to 6
 const simulatePopulationGrowth = (numOfKittensInALitter = [4, 6]) => {
 	// This array will hold the number of cats at each generation
-	const chartData: number[] = [1];
+	const chartData: number[] = [0];
 
 	// Start with one cat
 	const cats: Cat[] = [new Cat(numOfKittensInALitter)];
