@@ -114,26 +114,31 @@ const simulatePopulationGrowth = (numOfKittensInALitter = [4, 6]) => {
 	return chartData;
 };
 
+// Create trace for maximum population size
 const maxPopSizeTrace = {
 	x: Array.from({ length: numberOfIterations + 1 }).map((_, i) => i),
 	y: simulatePopulationGrowth([6, 6]), // Every cat will have 6 kittens
 	mode: 'lines+markers',
-	name: 'Maximum Population Size',
+	name: '6 kittens',
 };
 
+// Create trace for average population size
 const avgPopSizeTrace = {
 	x: Array.from({ length: numberOfIterations + 1 }).map((_, i) => i),
 	y: simulatePopulationGrowth([5, 5]), // Every cat will have 5 kittens
 	mode: 'lines+markers',
-	name: 'Average Population Size',
+	name: '5 kittens',
 };
 
+// Create trace for minimum population size
 const minPopSizeTrace = {
 	x: Array.from({ length: numberOfIterations + 1 }).map((_, i) => i),
 	y: simulatePopulationGrowth([4, 4]), // Every cat will have 4 kittens
 	mode: 'lines+markers',
-	name: 'Minimum Population Size',
+	name: '4 kittens',
 };
+
+
 
 const data = [maxPopSizeTrace, avgPopSizeTrace, minPopSizeTrace];
 
@@ -147,4 +152,5 @@ const layout = {
 	},
 };
 
+// Plot the graphs
 Plotly.newPlot('plot', data, layout);
