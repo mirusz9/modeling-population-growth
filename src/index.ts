@@ -3,7 +3,7 @@ const pregnancyLength = 2; // 2 months
 const minAgeForPregnancy = 4; // Age at which a female cat can first get pregnant; 4 months
 const pregnancyDelay = 4; // A female cat can have 3 litters a year, meaning a cat can get pregnant every 4 months
 const maxAgeForPregnancy = 120; // 120 months = 10 years;
-const numberOfIterations = 24; // We are trying to find out how many descendants will a cat have after 18 months
+const numberOfIterations = 24; // We are trying to find out how many descendants will a cat have after 18 months (use 18, 22 or 24)
 
 /* Cat class */
 
@@ -60,8 +60,8 @@ class Cat {
 				this.pregnancyLength++;
 			}
 		}
-		// If the cat is not pregnant and old enough to have children
-		else if (this.age >= minAgeForPregnancy) {
+		// If the cat is not pregnant and old (or young) enough to have children
+		else if (this.age >= minAgeForPregnancy && this.age <= maxAgeForPregnancy) {
 			// If enough time has passed since last pregnancy to get pregnant again
 			if (this.timeSinceLastPregnancy >= pregnancyDelay) {
 				// console.log('just got pregnant', this.age);
@@ -118,6 +118,15 @@ const simulatePopulationGrowth = (numOfKittensInALitter = [4, 6]) => {
 
 	return chartData;
 };
+
+// For calculating the average
+
+// let sum = 0;
+// for (let i = 0; i < 100000; i++) {
+// 	const result = simulatePopulationGrowth();
+// 	sum += result[result.length - 1];
+// }
+// console.log(sum / 100000);
 
 /* Graph settings */
 
